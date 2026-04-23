@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_bloc_study/bloc/counter_cubit.dart';
+import 'package:flutter_bloc_study/bloc/simple_cubit.dart';
 import 'package:flutter_bloc_study/screens/ant_screen.dart';
 import 'package:flutter_bloc_study/screens/bee_screen.dart';
 import 'package:flutter_bloc_study/screens/cat_screen.dart';
@@ -12,7 +13,13 @@ import 'package:flutter_bloc_study/utils/route_name.dart';
 
 void main() {
   runApp(
-    BlocProvider(create: (context) => CounterCubit(), child: const MainApp()),
+    MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => CounterCubit()),
+        BlocProvider(create: (context) => SimpleCubit()),
+      ],
+      child: const MainApp(),
+    ),
   );
 }
 
@@ -25,7 +32,7 @@ class MainApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       routes: {
         RouteName.home: (_) => const HomeScreen(),
-        RouteName.ant: (_) => const AntScreen(), //basic cubit
+        RouteName.ant: (_) => AntScreen(), //basic cubit
         RouteName.bee: (_) => const BeeScreen(), //simple cubit
         RouteName.cat: (_) => const CatScreen(), //standard cubit
         RouteName.dolphin: (_) => const DolphinScreen(), // Advance cubit
